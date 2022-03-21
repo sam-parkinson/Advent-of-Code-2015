@@ -3,15 +3,21 @@ import java.util.Scanner;
 
 public class FakeLisp {
     private int floor;
+    private int basement;
     private String parens;
 
     public FakeLisp(String address) {
+        basement = -1;
         parens = makeParens(address);
         floor = findFloor();
     }
 
     public int getFloor() {
         return this.floor;
+    }
+
+    public int getBasement() {
+        return this.basement;
     }
 
     private String makeParens(String address) {
@@ -39,6 +45,10 @@ public class FakeLisp {
                 fl++;
             else 
                 fl--;
+
+            if (basement == -1 && fl == -1) {
+                basement = i + 1;
+            }
         }
 
         return fl;
