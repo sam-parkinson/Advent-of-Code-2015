@@ -33,6 +33,14 @@ public class FakeLisp {
 
     private int findFloor() {
         int fl = 0;
+
+        for (int i = 0; i < parens.length(); i++) {
+            if (parens.charAt(i) == '(')
+                fl++;
+            else 
+                fl--;
+        }
+
         return fl;
     }
 }
