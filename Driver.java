@@ -17,6 +17,7 @@ public class Driver {
         System.out.println("Problem 3.2: " + tracker.getTotalRoboHouses());
 
         System.out.println();
-        System.out.println("Problem 4.1: ");
+        System.out.println("Problem 4.1: " + coin.getSmallestFiver());
+        System.out.println("Problem 4.2: " + coin.getSmallestSixer());
     }
 }
