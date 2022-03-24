@@ -3,11 +3,39 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class DeliveryTracker {
+    private class Coords {
+        private int x;
+        private int y;
+
+        private Coords(int[] xy) {
+            this.x = xy[0];
+            this.y = xy[1];
+        }
+
+        public boolean equals(Object obj) {
+            if (obj == this) 
+                return true;
+
+            if (!(obj instanceof Coords))
+                return false;
+
+            Coords c = (Coords) obj;
+
+            return this.x == c.x && this.y == c.y;
+        }
+
+        public String toString() {
+            return "[" + this.x + ", " + this.y + "]";
+        }
+    }
+
     private char[] directions;
-    private HashMap<Integer[], Integer> coordinates;
+    private HashMap<String, Integer> coordinates;
 
     public DeliveryTracker(String address) {
         directions = makeDirections(address);
+        coordinates = new HashMap<String, Integer>();
+        followDirections();
     }
 
     public int getTotalHouses() {
@@ -33,24 +61,43 @@ public class DeliveryTracker {
         for (int i = 0; i < directions.length; i++) {
             directions[i] = input.charAt(i);
         }
-
         return directions;
     }
 
     private void followDirections() {
-        // {x, y}
-        // > right, < left
-        // 
-        Integer[] coords = {0, 0};
+        int[] coords = {0, 0};
 
-        coordinates.put(coords, 1);
+        Coords c = new Coords(coords);
+        String cs = c.toString();
+        coordinates.put(cs, 1);
 
-        // start at 0, 0
+        for (int i = 0; i < directions.length; i++) {
+            switch(directions[i]) {
+                case '<':
+                    coords[0] -= 1;
+                    break;
+                case '>':
+                    coords[0] += 1;
+                    break;
+                case '^':
+                    coords[1] -= 1;
+                    break;
+                case 'v':
+                    coords[1] += 1;
+                    break;
+            }
 
-        // go through directions
-        // move
-        // check to see if coords exist
-        // if not, add
-        // if so, increment
+            c = new Coords(coords);
+            cs = c.toString();
+            
+            if (coordinates.containsKey(cs)) {
+                coordinates.put(cs, coordinates.get(cs) + 1);
+            } else {
+                coordinates.put(cs, 1);
+            }
+        }
     }
+
+    // part 2: use two coords arrays, one new hashmap
+    // alternate taking turns using % 2
 }
