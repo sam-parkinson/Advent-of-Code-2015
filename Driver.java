@@ -13,5 +13,6 @@ public class Driver {
 
         System.out.println();
         System.out.println("Problem 3.1: " + tracker.getTotalHouses());
+        System.out.println("Problem 3.2: " + tracker.getTotalRoboHouses());
     }
 }
