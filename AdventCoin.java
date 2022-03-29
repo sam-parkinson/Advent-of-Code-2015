@@ -11,8 +11,9 @@ public class AdventCoin {
 
     public AdventCoin(String address) {
         input = getInput(address);
-        smallestFiver = findSmallestInt(5);
-        smallestSixer = findSmallestInt(6);
+        smallestFiver = -1;
+        smallestSixer = -1;
+        findSmallestInt();
     }
 
     public int getSmallestFiver() {
@@ -40,22 +41,25 @@ public class AdventCoin {
         return input;
     }
 
-    private int findSmallestInt(int x) {
+    private void findSmallestInt() {
         int i = 0;
-        String str = "";
-        while (i != -1) {
-            str = findFirst5MD5(input + i, x);
-            if (str.equals("0".repeat(x))) {
-                return i;
+        String[] arr;
+        while (smallestFiver == -1 || smallestSixer == -1) {
+            arr = findFirst5MD5(input + i);
+            if (smallestFiver == -1 && arr[0].equals("00000")) {
+                smallestFiver = i;
+            }
+
+            if (smallestSixer == -1 && arr[1].equals("000000")) {
+                smallestSixer = i;
             }
             i++;
         }
-        return -1;
     }
 
     // https://www.geeksforgeeks.org/md5-hash-in-java/
 
-    private String findFirst5MD5(String input, int x) {
+    private String[] findFirst5MD5(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             
@@ -68,10 +72,10 @@ public class AdventCoin {
                 hashtext = "0" + hashtext;
             }
 
-            return hashtext.substring(0, x);
+            return new String[] {hashtext.substring(0, 5), hashtext.substring(0, 6)};
         } catch (NoSuchAlgorithmException e) {
             System.out.println(e);
         }
-        return "";
+        return null;
     }
 }
