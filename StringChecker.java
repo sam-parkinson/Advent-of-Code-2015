@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class StringChecker {
     private char[][] splitStrings;
     private int niceCount;
+    private int newNiceCount;
 
     public StringChecker(String address) {
         makeStrings(address);
@@ -15,6 +16,10 @@ public class StringChecker {
 
     public int getNiceCount() {
         return this.niceCount;
+    }
+
+    public int getNewNiceCount() {
+        return this.newNiceCount;
     }
 
     private void makeStrings(String address) {
@@ -42,21 +47,23 @@ public class StringChecker {
 
     private void countNiceStrings() {
         int nice = 0;
+        int newNice = 0;
 
         for (int i = 0; i < splitStrings.length; i++) {
             if (checkStringNice(splitStrings[i])) {
                 nice++;
             }
+
+            if (checkStringNewNice(splitStrings[i])) {
+                newNice++;
+            }
         }
 
         niceCount = nice;
+        newNiceCount = newNice;
     }
 
     private boolean checkStringNice(char[] str) {
-        // conditions: 
-        // contains 3 vowels (can be same vowel)
-        // contains pair of consecutive letters
-        // does not contain substrings ab, cd, pq, xy
         int vowelCounter = 0;
         boolean hasConsec = false;
 
@@ -79,6 +86,29 @@ public class StringChecker {
                 vowelCounter++;
         }
 
-        return hasConsec && vowelCounter <= 3;
+        return hasConsec && vowelCounter >= 3;
+    }
+
+    private boolean checkStringNewNice(char[] str) {
+        boolean hasTwoPair = false;
+        boolean hasXYX = false;
+
+        for (int i = 0; i < str.length - 2; i++) {
+            if (i < str.length - 3) {
+                for (int j = i + 2; j < str.length - 1; j++) {
+                    if (str[i] == str[j] && str[i+1] == str[j+1])
+                        hasTwoPair = true;
+                } 
+            }
+
+            if (str[i] == str[i + 2])
+                hasXYX = true;
+
+            if (hasTwoPair && hasXYX)
+                return true;
+        }
+
+        // one letter repeats with exactly one letter between them
+        return false;
     }
 }

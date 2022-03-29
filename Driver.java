@@ -4,7 +4,7 @@ public class Driver {
         PaperCalculator paperCalc = new PaperCalculator("inputs/day2.txt");
         DeliveryTracker tracker = new DeliveryTracker("inputs/day3.txt");
         // AdventCoin coin = new AdventCoin("inputs/day4.txt");
-        StringChecker niceList = new StringChecker("inputs/test.txt");
+        StringChecker niceList = new StringChecker("inputs/day5.txt");
 
         System.out.println("Problem 1.1: " + fakeLisp.getFloor());
         System.out.println("Problem 1.2: " + fakeLisp.getBasement());
@@ -24,5 +24,6 @@ public class Driver {
 
         System.out.println();
         System.out.println("Problem 5.1: " + niceList.getNiceCount());
+        System.out.println("Problem 5.2: " + niceList.getNewNiceCount());
     }
 }
