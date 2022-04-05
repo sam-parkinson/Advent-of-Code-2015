@@ -1,23 +1,30 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class LogicCircuit {
     private class LogicGate {
-        String input;
+        String[] input;
         String output;
-        // output and input strings used to hash values
         String operation; // maybe make this an enum type?
         
     }
 
     private class Wire {
-        // input gate indices
-        // output gate indices (?)
-        // value
+        ArrayList<Integer> inputIndices;
+        ArrayList<Integer> outputIndices;
+        int value;
+
+        private int getValue() {
+            return this.value;
+        }
     }
 
-    /*
+    private LogicGate[] gateArr;
+    private HashMap<String, Wire> wireMap;
+
+        /*
             Each logic gate is made up of:
             1. Input
             2. Operation
@@ -45,35 +52,54 @@ public class LogicCircuit {
 
         Wire, input, output, number value, operation
 
-        Recursion?
-
-        Base case: number
-
-        Exit case: no output
+        Recursion
+            Base case: number
+            Exit case: no output
 
         Start with wire we know has no further output (i.e., appears in output table but not in input table) -- can be more than one such wire
         Look at the input wires for that, get values of those wires
         Keep going until base case(s) -- this is going to be filling out a tree?
 
-        Not really a tree
-
-        Okay, so, step one: parse input into logic gates
+        Step one: parse input into logic gates
 
         Step two: go through logic gates, find out which wires exist
 
-        We know which wires exist and which connections exist
-        Map wires to connections and vice-versa
+        Step three: map wires to connections and vice-versa
 
-        Connections to wires is easy
-
-        Array of gates
-        HashMap of wires
         Each gate knows what wires it inputs to and hashes to them easily
         Each wire knows index of output and input gates
         
     */
 
     public LogicCircuit(String address) {
+        makeGates(address);
+        // process wires
+        // call function to start processing logic circuit
+    }
 
+    // getter for wire value
+
+    private void makeGates(String address) {
+        ArrayList<String> lineArr = new ArrayList<String>();
+
+        try {
+            File file = new File(address);
+
+            Scanner stdin = new Scanner(file);
+
+            while (stdin.hasNextLine()) {
+                lineArr.add(stdin.nextLine());
+            }
+
+            stdin.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        gateArr = new LogicGate[lineArr.size()];
+
+        for (int i = 0; i < gateArr.length; i++) {
+            // pass to child function
+        }
     }
 }
