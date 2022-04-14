@@ -9,6 +9,11 @@ public class LogicCircuit {
         String output;
         String operation; // maybe make this an enum type?
         
+        private LogicGate(String[] input, String output, String operation) {
+            input = this.input;
+            output = this.output;
+            operation = this.operation;
+        }
     }
 
     private class Wire {
@@ -99,7 +104,23 @@ public class LogicCircuit {
         gateArr = new LogicGate[lineArr.size()];
 
         for (int i = 0; i < gateArr.length; i++) {
-            // pass to child function
+            gateArr[i] = parseGateStr(lineArr.get(i));
         }
+    }
+
+    private LogicGate parseGateStr(String str) {
+
+        String[] arr = str.split(" ");
+        int i = 0;
+        // split string into component parts
+        // go through array
+
+        // while the string is not ->
+
+        // if lowercase or number, add to input array
+        // if uppercase, add to operation
+        
+        // add last item to output
+        return null;
     }
 }
