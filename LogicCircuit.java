@@ -27,54 +27,7 @@ public class LogicCircuit {
     }
 
     private LogicGate[] gateArr;
-    private HashMap<String, Wire> wireMap;
-
-        /*
-            Each logic gate is made up of:
-            1. Input
-            2. Operation
-            3. Output
-
-            Output is wire
-            Input can be either wire or number
-
-            Can also be wire and wire, wire and number, or number and number
-
-            Operations are bitwise arithmetic
-
-            Wires exist if they show up in either the input or output of a logic gate
-            When setting up circuit, check if input is number or letter
-        */
-
-    /*
-        Data structure note things
-
-        Hashmap?
-
-        Wires and gates
-
-        What we want is values on wires
-
-        Wire, input, output, number value, operation
-
-        Recursion
-            Base case: number
-            Exit case: no output
-
-        Start with wire we know has no further output (i.e., appears in output table but not in input table) -- can be more than one such wire
-        Look at the input wires for that, get values of those wires
-        Keep going until base case(s) -- this is going to be filling out a tree?
-
-        Step one: parse input into logic gates
-
-        Step two: go through logic gates, find out which wires exist
-
-        Step three: map wires to connections and vice-versa
-
-        Each gate knows what wires it inputs to and hashes to them easily
-        Each wire knows index of output and input gates
-        
-    */
+    private HashMap<String, Wire> wireMap;  
 
     public LogicCircuit(String address) {
         makeGates(address);
@@ -112,15 +65,74 @@ public class LogicCircuit {
 
         String[] arr = str.split(" ");
         int i = 0;
-        // split string into component parts
-        // go through array
 
-        // while the string is not ->
+        String output = arr[arr.length - 1];
+        String operation = "";
 
-        // if lowercase or number, add to input array
-        // if uppercase, add to operation
+        ArrayList<String> inputList = new ArrayList<String>();
+
+        while (!arr[i].equals("->")) {
+            if (Character.isUpperCase(arr[i].charAt(0))) {
+                operation = arr[i];
+            } else {
+                inputList.add(arr[i]);
+            }
+
+            i++;
+        }
+
+        String[] input = new String[inputList.size()];
+        input = inputList.toArray(input);
+
         
-        // add last item to output
-        return null;
+        return new LogicGate(input, operation, output);
     }
+
 }
+
+/*
+    Each logic gate is made up of:
+    1. Input
+    2. Operation
+    3. Output
+
+    Output is wire
+    Input can be either wire or number
+
+    Can also be wire and wire, wire and number, or number and number
+
+    Operations are bitwise arithmetic
+
+    Wires exist if they show up in either the input or output of a logic gate
+    When setting up circuit, check if input is number or letter
+*/
+
+/*
+    Data structure note things
+
+    Hashmap?
+
+    Wires and gates
+
+    What we want is values on wires
+
+    Wire, input, output, number value, operation
+
+    Recursion
+        Base case: number
+        Exit case: no output
+
+    Start with wire we know has no further output (i.e., appears in output table but not in input table) -- can be more than one such wire
+    Look at the input wires for that, get values of those wires
+    Keep going until base case(s) -- this is going to be filling out a tree?
+
+    Step one: parse input into logic gates
+
+    Step two: go through logic gates, find out which wires exist
+
+    Step three: map wires to connections and vice-versa
+
+    Each gate knows what wires it inputs to and hashes to them easily
+    Each wire knows index of output and input gates
+    
+*/
