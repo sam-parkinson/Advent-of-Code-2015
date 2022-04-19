@@ -18,8 +18,13 @@ public class LogicCircuit {
 
     private class Wire {
         ArrayList<Integer> inputIndices;
-        ArrayList<Integer> outputIndices;
-        int value;
+        int outputIndex, value;
+
+        private Wire() {
+            this.inputIndices = new ArrayList<Integer>();
+            this.outputIndex = -1;
+            this.value = -1;    // setting value to -1 gives us a means to check which wires do not have values calculated yet
+        }
 
         private int getValue() {
             return this.value;
@@ -31,6 +36,7 @@ public class LogicCircuit {
 
     public LogicCircuit(String address) {
         makeGates(address);
+        buildWires();
         // process wires
         // call function to start processing logic circuit
     }
@@ -88,6 +94,31 @@ public class LogicCircuit {
         return new LogicGate(input, operation, output);
     }
 
+    private void buildWires() {
+        for (int i = 0; i < gateArr.length; i++) {
+            // check inputs
+
+            if (Character.isLowerCase(gateArr[i].input[0].charAt(0))) {
+                // create wire if not existing
+                // add gate index to input
+            }
+
+            if (gateArr[i].input.length == 2 && Character.isLowerCase(gateArr[i].input[1].charAt(0))) {
+                // create wire if not existing
+                // add gate index to input
+            }
+
+            // output is always a string
+            // create wire if not existing, set output index
+        }
+    }
+
+    private void processGates() {
+        // go through gate arr
+        // check to see if we know output value, if not:
+            // run input values through operation, assign to output wire's value
+            // if input values unknown apply recursion
+    }
 }
 
 /*
