@@ -97,27 +97,55 @@ public class LogicCircuit {
     private void buildWires() {
         for (int i = 0; i < gateArr.length; i++) {
             // check inputs
+            String inp0 = gateArr[i].input[0];
+            if (Character.isLowerCase(inp0.charAt(0))) {
+                wireMap.putIfAbsent(inp0, new Wire());
 
-            if (Character.isLowerCase(gateArr[i].input[0].charAt(0))) {
-                // create wire if not existing
-                // add gate index to input
+                Wire w = wireMap.get(inp0);
+                w.inputIndices.add(i);
+
+                wireMap.put(inp0, w);
             }
 
-            if (gateArr[i].input.length == 2 && Character.isLowerCase(gateArr[i].input[1].charAt(0))) {
-                // create wire if not existing
-                // add gate index to input
+            String inp1 = gateArr[i].input.length == 2 ? gateArr[i].input[1] : null;
+            if (inp1 != null && Character.isLowerCase(inp1.charAt(0))) {
+                wireMap.putIfAbsent(inp1, new Wire());
+
+                Wire w = wireMap.get(inp1);
+                w.inputIndices.add(i);
+
+                wireMap.put(inp1, w);
             }
 
-            // output is always a string
-            // create wire if not existing, set output index
+            String out = gateArr[i].output;
+            wireMap.putIfAbsent(inp0, new Wire());
+
+            Wire w = wireMap.get(out);
+            w.inputIndices.add(i);
+
+            wireMap.put(out, w);
         }
     }
 
     private void processGates() {
+        for (int i = 0; i < gateArr.length; i++) {
+            // this is its own function
+            
+        }
         // go through gate arr
         // check to see if we know output value, if not:
             // run input values through operation, assign to output wire's value
             // if input values unknown apply recursion
+    }
+
+    private int getWireOutput() { // this is the recursive function
+        // do we know output value (i.e., is value of wire at output not -1?)
+            // if so, continue
+            // if not, check input values, which are either a number or the output values of another gate
+            // while we do not know an input value, apply recursion
+            // when we know all input values (either 1 or 2), perform operation, find output value
+            // when we know output value, assign output value to relevant wire
+        return 0;
     }
 }
 
