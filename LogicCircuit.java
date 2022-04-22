@@ -37,6 +37,7 @@ public class LogicCircuit {
     public LogicCircuit(String address) {
         makeGates(address);
         buildWires();
+        processGates();
         // process wires
         // call function to start processing logic circuit
     }
@@ -121,7 +122,7 @@ public class LogicCircuit {
             wireMap.putIfAbsent(inp0, new Wire());
 
             Wire w = wireMap.get(out);
-            w.inputIndices.add(i);
+            w.outputIndex = i;
 
             wireMap.put(out, w);
         }
@@ -129,8 +130,7 @@ public class LogicCircuit {
 
     private void processGates() {
         for (int i = 0; i < gateArr.length; i++) {
-            // this is its own function
-            
+            checkGateValues(i);            
         }
         // go through gate arr
         // check to see if we know output value, if not:
@@ -138,14 +138,24 @@ public class LogicCircuit {
             // if input values unknown apply recursion
     }
 
-    private int getWireOutput() { // this is the recursive function
+    private void checkGateValues(int index) { // this is the recursive function
+        String output = gateArr[index].output;
+
+        if (wireMap.get(output).value == -1) {
+            // find length of input
+
+            // look at input
+
+            // calculate output
+
+            // update output
+        }
         // do we know output value (i.e., is value of wire at output not -1?)
             // if so, continue
             // if not, check input values, which are either a number or the output values of another gate
             // while we do not know an input value, apply recursion
             // when we know all input values (either 1 or 2), perform operation, find output value
             // when we know output value, assign output value to relevant wire
-        return 0;
     }
 }
 
