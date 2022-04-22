@@ -38,8 +38,6 @@ public class LogicCircuit {
         makeGates(address);
         buildWires();
         processGates();
-        // process wires
-        // call function to start processing logic circuit
     }
 
     // getter for wire value
@@ -130,7 +128,7 @@ public class LogicCircuit {
 
     private void processGates() {
         for (int i = 0; i < gateArr.length; i++) {
-            checkGateValues(i);            
+            checkGateValues(i, gateArr[i]);            
         }
         // go through gate arr
         // check to see if we know output value, if not:
@@ -138,18 +136,45 @@ public class LogicCircuit {
             // if input values unknown apply recursion
     }
 
-    private void checkGateValues(int index) { // this is the recursive function
-        String output = gateArr[index].output;
+    private int checkGateValues(int index, LogicGate gate) { // this is the recursive function
 
-        if (wireMap.get(output).value == -1) {
-            // find length of input
+        int outValue;
 
+        if (wireMap.get(gate.output).value == -1) {
+            // switch statement based on operation
+            String op = gate.operation;
+
+            int output;
+            // call correct function
+            switch (op) {
+                case "AND":
+                    output = andGate(gate.input);
+                    break;
+                case "LSHIFT":
+                    output = lshiftGate(gate.input);
+                    break;
+                case "RSHIFT":
+                    output = rshiftGate(gate.input);
+                    break;
+                case "OR":
+                    output = orGate(gate.input);
+                    break;
+                case "NOT":
+                    output = notGate(gate.input);
+                    break;
+                default:
+                    // If there isn't an operation, just get the one input and put it as output
+            }          
             // look at input
 
             // calculate output
 
             // update output
         }
+
+        outValue = wireMap.get(gate.output).value;
+
+        return outValue;
         // do we know output value (i.e., is value of wire at output not -1?)
             // if so, continue
             // if not, check input values, which are either a number or the output values of another gate
@@ -157,6 +182,110 @@ public class LogicCircuit {
             // when we know all input values (either 1 or 2), perform operation, find output value
             // when we know output value, assign output value to relevant wire
     }
+
+    // operation types go here
+    // each one of these takes strings as input
+    // if 
+
+    private int andGate(String[] input) {
+        // if input 0 is char, check to see if value 
+        int inputA, inputB;
+
+        if (Character.isLowerCase(input[0].charAt(0))) {
+            int i = wireMap.get(input[0]).outputIndex;
+            inputA = checkGateValues(i, gateArr[i]);
+        } else {
+            inputA = Integer.parseInt(input[0]);
+        }
+
+        if (Character.isLowerCase(input[1].charAt(0))) {
+            int i = wireMap.get(input[1]).outputIndex;
+            inputB = checkGateValues(i, gateArr[i]);
+        } else {
+            inputB = Integer.parseInt(input[1]);
+        }
+
+        // and gate logic
+
+        return 0;
+    }
+
+    private int orGate(String[] input) {
+
+        int inputA, inputB;
+
+        if (Character.isLowerCase(input[0].charAt(0))) {
+            int i = wireMap.get(input[0]).outputIndex;
+            inputA = checkGateValues(i, gateArr[i]);
+        } else {
+            inputA = Integer.parseInt(input[0]);
+        }
+
+        if (Character.isLowerCase(input[1].charAt(0))) {
+            int i = wireMap.get(input[1]).outputIndex;
+            inputB = checkGateValues(i, gateArr[i]);
+        } else {
+            inputB = Integer.parseInt(input[1]);
+        }
+
+        // or gate logic
+
+        return 0;
+    }
+
+    private int notGate(String[] input) {
+        // only one input to not gate
+        int inputA; 
+
+        if (Character.isLowerCase(input[0].charAt(0))) {
+            int i = wireMap.get(input[0]).outputIndex;
+            inputA = checkGateValues(i, gateArr[i]);
+        } else {
+            inputA = Integer.parseInt(input[0]);
+        }
+
+        // not gate logic
+
+        return 0;
+    }
+
+    private int lshiftGate(String[] input) {
+        // really only one char input to shift gates
+
+        int inputA, shift; 
+
+        if (Character.isLowerCase(input[0].charAt(0))) {
+            int i = wireMap.get(input[0]).outputIndex;
+            inputA = checkGateValues(i, gateArr[i]);
+        } else {
+            inputA = Integer.parseInt(input[0]);
+        }
+
+        shift = Integer.parseInt(input[1]);
+
+        // shift gate logic
+
+        return 0;
+    }
+
+    private int rshiftGate(String[] input) {
+
+        int inputA, shift; 
+
+        if (Character.isLowerCase(input[0].charAt(0))) {
+            int i = wireMap.get(input[0]).outputIndex;
+            inputA = checkGateValues(i, gateArr[i]);
+        } else {
+            inputA = Integer.parseInt(input[0]);
+        }
+
+        shift = Integer.parseInt(input[1]);
+
+        // shift gate logic
+
+        return 0;
+    }
+
 }
 
 /*
