@@ -10,9 +10,20 @@ public class LogicCircuit {
         String operation; // maybe make this an enum type?
         
         private LogicGate(String[] input, String output, String operation) {
-            input = this.input;
-            output = this.output;
-            operation = this.operation;
+            this.input = input;
+            this.output = output;
+            this.operation = operation;
+        }
+
+        private LogicGate(LogicGate old) {
+            String[] arr = new String[old.input.length];
+            for (int i = 0; i < arr.length; i++) {
+                arr[i] = old.input[i];
+            }
+
+            this.input = arr;
+            this.output = old.output;
+            this.operation = old.operation;
         }
     }
 
@@ -36,11 +47,16 @@ public class LogicCircuit {
 
     public LogicCircuit(String address) {
         makeGates(address);
+
+        wireMap = new HashMap<String, Wire>();
+        
         buildWires();
         processGates();
     }
 
-    // getter for wire value
+    public int getWireValue(String wire) {
+        return wireMap.get(wire).value;
+    }
 
     private void makeGates(String address) {
         ArrayList<String> lineArr = new ArrayList<String>();
@@ -62,7 +78,7 @@ public class LogicCircuit {
         gateArr = new LogicGate[lineArr.size()];
 
         for (int i = 0; i < gateArr.length; i++) {
-            gateArr[i] = parseGateStr(lineArr.get(i));
+            gateArr[i] = new LogicGate(parseGateStr(lineArr.get(i)));
         }
     }
 
@@ -89,8 +105,7 @@ public class LogicCircuit {
         String[] input = new String[inputList.size()];
         input = inputList.toArray(input);
 
-        
-        return new LogicGate(input, operation, output);
+        return new LogicGate(input, output, operation);
     }
 
     private void buildWires() {
@@ -144,40 +159,36 @@ public class LogicCircuit {
             // switch statement based on operation
             String op = gate.operation;
 
-            int output;
             // call correct function
             switch (op) {
                 case "AND":
-                    output = andGate(gate.input);
+                    outValue = andGate(gate.input);
                     break;
                 case "LSHIFT":
-                    output = lshiftGate(gate.input);
+                    outValue = lshiftGate(gate.input);
                     break;
                 case "RSHIFT":
-                    output = rshiftGate(gate.input);
+                    outValue = rshiftGate(gate.input);
                     break;
                 case "OR":
-                    output = orGate(gate.input);
+                    outValue = orGate(gate.input);
                     break;
                 case "NOT":
-                    output = notGate(gate.input);
+                    outValue = notGate(gate.input);
                     break;
                 default:
-                    
-                    // If there isn't an operation, just get the one input and put it as output
-            }          
+                    outValue = passThroughGate(gate.input);
+            }
+            
+            wireMap.get(gate.output).value = outValue;
+        } else {
+            outValue = wireMap.get(gate.output).value;
         }
-
-        outValue = wireMap.get(gate.output).value;
 
         return outValue;
     }
 
-    // operation types go here
-    // each one of these takes strings as input
-
     private int andGate(String[] input) {
-        // if input 0 is char, check to see if value 
         int inputA, inputB;
 
         if (Character.isLowerCase(input[0].charAt(0))) {
@@ -225,7 +236,6 @@ public class LogicCircuit {
     }
 
     private int notGate(String[] input) {
-        // only one input to not gate
         int inputA; 
 
         if (Character.isLowerCase(input[0].charAt(0))) {
@@ -252,9 +262,7 @@ public class LogicCircuit {
 
         shift = Integer.parseInt(input[1]);
 
-        // shift gate logic
-
-        return 0;
+        return Short.toUnsignedInt((short) (inputA << shift));
     }
 
     private int rshiftGate(String[] input) {
@@ -270,10 +278,20 @@ public class LogicCircuit {
 
         shift = Integer.parseInt(input[1]);
 
-        // shift gate logic
-        // use logical shift operator >>> here
+        return Short.toUnsignedInt((short) (inputA >>> shift));
+    }
 
-        return 0;
+    private int passThroughGate(String[] input) {
+        int inputA;
+
+        if (Character.isLowerCase(input[0].charAt(0))) {
+            int i = wireMap.get(input[0]).outputIndex;
+            inputA = checkGateValues(i, gateArr[i]);
+        } else {
+            inputA = Integer.parseInt(input[0]);
+        }
+
+        return inputA;
     }
 
 }
