@@ -163,29 +163,18 @@ public class LogicCircuit {
                     output = notGate(gate.input);
                     break;
                 default:
+                    
                     // If there isn't an operation, just get the one input and put it as output
             }          
-            // look at input
-
-            // calculate output
-
-            // update output
         }
 
         outValue = wireMap.get(gate.output).value;
 
         return outValue;
-        // do we know output value (i.e., is value of wire at output not -1?)
-            // if so, continue
-            // if not, check input values, which are either a number or the output values of another gate
-            // while we do not know an input value, apply recursion
-            // when we know all input values (either 1 or 2), perform operation, find output value
-            // when we know output value, assign output value to relevant wire
     }
 
     // operation types go here
     // each one of these takes strings as input
-    // if 
 
     private int andGate(String[] input) {
         // if input 0 is char, check to see if value 
@@ -205,9 +194,10 @@ public class LogicCircuit {
             inputB = Integer.parseInt(input[1]);
         }
 
-        // and gate logic
+        short a = (short) inputA;
+        short b = (short) inputB;
 
-        return 0;
+        return Short.toUnsignedInt((short) (a & b));
     }
 
     private int orGate(String[] input) {
@@ -228,9 +218,10 @@ public class LogicCircuit {
             inputB = Integer.parseInt(input[1]);
         }
 
-        // or gate logic
+        short a = (short) inputA;
+        short b = (short) inputB;;
 
-        return 0;
+        return Short.toUnsignedInt((short) (a ^ b));
     }
 
     private int notGate(String[] input) {
@@ -244,14 +235,12 @@ public class LogicCircuit {
             inputA = Integer.parseInt(input[0]);
         }
 
-        // not gate logic
+        short a = (short) inputA;
 
-        return 0;
+        return Short.toUnsignedInt((short) ~a);
     }
 
     private int lshiftGate(String[] input) {
-        // really only one char input to shift gates
-
         int inputA, shift; 
 
         if (Character.isLowerCase(input[0].charAt(0))) {
@@ -282,6 +271,7 @@ public class LogicCircuit {
         shift = Integer.parseInt(input[1]);
 
         // shift gate logic
+        // use logical shift operator >>> here
 
         return 0;
     }
