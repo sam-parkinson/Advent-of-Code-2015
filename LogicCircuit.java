@@ -36,26 +36,35 @@ public class LogicCircuit {
             this.outputIndex = -1;
             this.value = -1;    // setting value to -1 gives us a means to check which wires do not have values calculated yet
         }
-
-        private int getValue() {
-            return this.value;
-        }
     }
 
     private LogicGate[] gateArr;
-    private HashMap<String, Wire> wireMap;  
+    private HashMap<String, Wire> wireMap;
+    private int aFirst, aSecond;  
 
     public LogicCircuit(String address) {
         makeGates(address);
 
         wireMap = new HashMap<String, Wire>();
-
         buildWires();
         processGates();
+
+        aFirst = wireMap.get("a").value;
+        gateArr[wireMap.get("b").outputIndex].input[0] = Integer.toString(aFirst); 
+
+        wireMap = new HashMap<String, Wire>();
+        buildWires();
+        processGates();
+
+        aSecond = wireMap.get("a").value;
     }
 
-    public int getWireValue(String wire) {
-        return wireMap.get(wire).value;
+    public int getAFirst() {
+        return this.aFirst;
+    }
+
+    public int getASecond() {
+        return this.aSecond;
     }
 
     private void makeGates(String address) {

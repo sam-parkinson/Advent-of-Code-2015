@@ -33,6 +33,7 @@ public class Driver {
         System.out.println("Problem 6.2: " + lightGrid.getBrightness());
 
         System.out.println();
-        System.out.println("Problem 7.1: " + logicCircuit.getWireValue("a"));
+        System.out.println("Problem 7.1: " + logicCircuit.getAFirst());
+        System.out.println("Problem 7.2: " + logicCircuit.getASecond());
     }
 }
