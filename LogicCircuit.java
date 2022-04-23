@@ -49,7 +49,7 @@ public class LogicCircuit {
         makeGates(address);
 
         wireMap = new HashMap<String, Wire>();
-        
+
         buildWires();
         processGates();
     }
@@ -132,7 +132,7 @@ public class LogicCircuit {
             }
 
             String out = gateArr[i].output;
-            wireMap.putIfAbsent(inp0, new Wire());
+            wireMap.putIfAbsent(out, new Wire());
 
             Wire w = wireMap.get(out);
             w.outputIndex = i;

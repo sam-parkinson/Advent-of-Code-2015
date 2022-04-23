@@ -6,7 +6,7 @@ public class Driver {
         // AdventCoin coin = new AdventCoin("inputs/day4.txt");
         StringChecker niceList = new StringChecker("inputs/day5.txt");
         LightGrid lightGrid = new LightGrid("inputs/day6.txt");
-        LogicCircuit logicCircuit = new LogicCircuit("inputs/test.txt");
+        LogicCircuit logicCircuit = new LogicCircuit("inputs/day7.txt");
 
         System.out.println("Problem 1.1: " + fakeLisp.getFloor());
         System.out.println("Problem 1.2: " + fakeLisp.getBasement());
@@ -33,6 +33,6 @@ public class Driver {
         System.out.println("Problem 6.2: " + lightGrid.getBrightness());
 
         System.out.println();
-        System.out.println("Test: " + logicCircuit.getWireValue("x"));
+        System.out.println("Problem 7.1: " + logicCircuit.getWireValue("a"));
     }
 }
