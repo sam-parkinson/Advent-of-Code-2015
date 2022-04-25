@@ -7,6 +7,7 @@ public class Driver {
         StringChecker niceList = new StringChecker("inputs/day5.txt");
         LightGrid lightGrid = new LightGrid("inputs/day6.txt");
         LogicCircuit logicCircuit = new LogicCircuit("inputs/day7.txt");
+        Matchsticks matchstick = new Matchsticks("inputs/day8.txt");
 
         System.out.println("Problem 1.1: " + fakeLisp.getFloor());
         System.out.println("Problem 1.2: " + fakeLisp.getBasement());
@@ -35,5 +36,8 @@ public class Driver {
         System.out.println();
         System.out.println("Problem 7.1: " + logicCircuit.getAFirst());
         System.out.println("Problem 7.2: " + logicCircuit.getASecond());
+
+        System.out.println();
+        System.out.println("Problem 8.1: " + matchstick.getDifference());
     }
 }
