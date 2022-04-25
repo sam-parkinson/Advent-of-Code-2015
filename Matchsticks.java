@@ -4,17 +4,22 @@ import java.util.Scanner;
 
 public class Matchsticks {
     String[] rawArr, netArr;
-    int rawCharCount, netCharCount;
+    int rawCharCount, netCharCount, cookedCharCount;
 
     public Matchsticks(String address) {
         parseStrings(address);
         rawCharCount = 0;
         netCharCount = 0;
+        cookedCharCount = 0;
         countCharacters();
     }
 
     public int getDifference() {
         return this.rawCharCount - this.netCharCount;
+    }
+
+    public int getCookedDiff() {
+        return this.cookedCharCount - this.rawCharCount;
     }
 
     private void parseStrings(String address) {
@@ -46,6 +51,7 @@ public class Matchsticks {
         for (int i = 0; i < rawArr.length; i++) {
             this.rawCharCount += rawArr[i].length();
             this.netCharCount += netArr[i].length();
+            this.cookedCharCount += cookedCharCounter(rawArr[i]);
         }
     }
 
@@ -76,5 +82,15 @@ public class Matchsticks {
         }
 
         return netStr.toString();
+    }
+
+    private int cookedCharCounter(String str) {
+        int count = 2;
+
+        for (int i = 0; i < str.length(); i++) {
+            count += (str.charAt(i) == '\\' || str.charAt(i) == '"') ? 2 : 1;
+        }
+        
+        return count;
     }
 }

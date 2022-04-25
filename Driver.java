@@ -39,5 +39,6 @@ public class Driver {
 
         System.out.println();
         System.out.println("Problem 8.1: " + matchstick.getDifference());
+        System.out.println("Problem 8.2: " + matchstick.getCookedDiff());
     }
 }
